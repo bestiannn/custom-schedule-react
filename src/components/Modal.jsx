@@ -1,4 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
+import { FaSave } from "react-icons/fa";
+import { AiOutlineClose, AiFillDelete } from "react-icons/ai";
 import { useEffect, useState } from "react";
 
 const Modal = ({
@@ -28,69 +30,92 @@ const Modal = ({
   return (
     <AnimatePresence>
       {selectedId && (
-        <motion.div layoutId={selectedId} className="bg-gray-500">
-          <p className="text-white text-xl">ID: {id}</p>
-          <form onSubmit={(e) => e.preventDefault()}>
-            <label htmlFor="">day</label>
-            <input
-              type="text"
-              value={newItem.day}
-              onChange={(e) => {
-                setNewItem((prev) => {
-                  return {
-                    ...prev,
-                    day: e.target.value,
-                  };
-                });
-              }}
-            />
-            <label htmlFor="">title</label>
-            <input
-              type="text"
-              value={newItem.title}
-              onChange={(e) => {
-                console.log(e.target.value);
-                setNewItem((prev) => {
-                  return {
-                    ...prev,
-                    title: e.target.value,
-                  };
-                });
-              }}
-            />
-            <label htmlFor="">description</label>
-            <input
-              type="text"
-              value={newItem.description}
-              onChange={(e) => {
-                setNewItem((prev) => {
-                  return {
-                    ...prev,
-                    description: e.target.value,
-                  };
-                });
-              }}
-            />
-          </form>
-          <button onClick={() => setSelectedId(null)}>Close</button>
-          <button
-            onClick={() => {
-              setScheduleItems((prev) => {
-                return prev.map((x) => {
-                  if (x.id === id) {
+        <motion.div
+          layoutId={selectedId}
+          className="fixed top-0 grid h-screen place-items-center bg-black/50"
+        >
+          <motion.div className="bg-ctp-surface1">
+            <button onClick={() => setSelectedId(null)} className="text-white">
+              <AiOutlineClose />
+            </button>
+            <h3 className="text-center text-xl font-bold text-ctp-text">
+              Edit item
+            </h3>
+            <form onSubmit={(e) => e.preventDefault()}>
+              <label className="font-bold text-ctp-flamingo">Day</label>
+              <select
+                onChange={(e) =>
+                  setNewItem({ ...newItem, day: e.target.value })
+                }
+                value={newItem.day}
+              >
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+              </select>
+              <label className="font-bold text-ctp-flamingo">Title</label>
+              <input
+                type="text"
+                value={newItem.title}
+                onChange={(e) => {
+                  setNewItem((prev) => {
                     return {
-                      ...x,
-                      ...newItem,
+                      ...prev,
+                      title: e.target.value,
                     };
-                  }
-                  return x;
+                  });
+                }}
+              />
+              <label className="font-bold text-ctp-flamingo">Description</label>
+              <input
+                type="text"
+                value={newItem.description}
+                onChange={(e) => {
+                  setNewItem((prev) => {
+                    return {
+                      ...prev,
+                      description: e.target.value,
+                    };
+                  });
+                }}
+              />
+            </form>
+
+            <button
+              className="rounded-xl bg-ctp-red px-7 py-1 font-bold text-white"
+              onClick={() => {
+                setScheduleItems((prev) => {
+                  return prev.filter((x) => x.id !== id);
                 });
-              });
-              setSelectedId(null);
-            }}
-          >
-            Save
-          </button>
+                setSelectedId(null);
+              }}
+            >
+              <AiFillDelete className="inline-block" /> Delete
+            </button>
+            <button
+              className="rounded-xl bg-ctp-green px-7 py-1 font-bold text-white"
+              onClick={() => {
+                setScheduleItems((prev) => {
+                  return prev.map((x) => {
+                    if (x.id === id) {
+                      return {
+                        ...x,
+                        ...newItem,
+                      };
+                    }
+                    return x;
+                  });
+                });
+                setSelectedId(null);
+              }}
+            >
+              <FaSave className="inline-block" /> Save
+            </button>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>

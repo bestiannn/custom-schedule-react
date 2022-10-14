@@ -1,4 +1,5 @@
 import { Reorder } from "framer-motion";
+import { AiOutlinePlus } from "react-icons/ai";
 import { v4 as uuidv4 } from "uuid";
 import Item from "./Item";
 
@@ -13,23 +14,23 @@ const Days = ({
     const newScheduleItems = {
       id: uuidv4(),
       day: day,
-      title: "New Item",
-      description: "some description",
+      title: `New ${day} item`,
+      description: "Some description...",
     };
     setScheduleItems((prev) => [...prev, newScheduleItems]);
   };
   const itemsDay = scheduleItems.filter((item) => item.day === day);
 
   return (
-    <div className="text-ctp-lavender font-extrabold">
-      <h2>day {day}</h2>
+    <div className="font-extrabold text-ctp-lavender">
+      <h2 className="mt-5 mb-3 text-lg">{day}</h2>
       <button
-        className="bg-ctp-surface1 hover:bg-ctp-surface0 w-10 rounded-lg"
+        className="p-px rounded-full bg-ctp-surface1 hover:bg-ctp-surface0"
         onClick={handleAddItem}
       >
-        +
+        <AiOutlinePlus className="mx-auto text-2xl text-ctp-lavender" />
       </button>
-      <div className="text-ctp-text mt-5">
+      <div className="mt-5 font-bold text-ctp-text">
         <Reorder.Group
           axis="y"
           values={itemsDay.map((x) => x.id)}
