@@ -32,16 +32,24 @@ const Modal = ({
       {selectedId && (
         <motion.div
           layoutId={selectedId}
-          className="fixed top-0 grid h-screen place-items-center bg-black/50"
+          className="fixed top-0 grid h-screen w-screen place-items-center bg-black/50"
         >
-          <motion.div className="bg-ctp-surface1">
-            <button onClick={() => setSelectedId(null)} className="text-white">
-              <AiOutlineClose />
-            </button>
+          <motion.div className="w-screen bg-ctp-surface1 py-5 px-5 pb-10 md:w-96">
+            <div className="grid place-content-end">
+              <button
+                onClick={() => setSelectedId(null)}
+                className="text-white text-xl font-bold"
+              >
+                <AiOutlineClose className="h-6 w-6" />
+              </button>
+            </div>
             <h3 className="text-center text-xl font-bold text-ctp-text">
               Edit item
             </h3>
-            <form onSubmit={(e) => e.preventDefault()}>
+            <form
+              onSubmit={(e) => e.preventDefault()}
+              className="mt-5 mb-10 grid place-content-center"
+            >
               <label className="font-bold text-ctp-flamingo">Day</label>
               <select
                 onChange={(e) =>
@@ -85,36 +93,38 @@ const Modal = ({
               />
             </form>
 
-            <button
-              className="rounded-xl bg-ctp-red px-7 py-1 font-bold text-white"
-              onClick={() => {
-                setScheduleItems((prev) => {
-                  return prev.filter((x) => x.id !== id);
-                });
-                setSelectedId(null);
-              }}
-            >
-              <AiFillDelete className="inline-block" /> Delete
-            </button>
-            <button
-              className="rounded-xl bg-ctp-green px-7 py-1 font-bold text-white"
-              onClick={() => {
-                setScheduleItems((prev) => {
-                  return prev.map((x) => {
-                    if (x.id === id) {
-                      return {
-                        ...x,
-                        ...newItem,
-                      };
-                    }
-                    return x;
+            <div className="mt-5 flex justify-center gap-10">
+              <button
+                className="rounded-xl bg-ctp-red px-7 py-1 font-bold text-white"
+                onClick={() => {
+                  setScheduleItems((prev) => {
+                    return prev.filter((x) => x.id !== id);
                   });
-                });
-                setSelectedId(null);
-              }}
-            >
-              <FaSave className="inline-block" /> Save
-            </button>
+                  setSelectedId(null);
+                }}
+              >
+                <AiFillDelete className="inline-block" /> Delete
+              </button>
+              <button
+                className="rounded-xl bg-ctp-green px-7 py-1 font-bold text-white"
+                onClick={() => {
+                  setScheduleItems((prev) => {
+                    return prev.map((x) => {
+                      if (x.id === id) {
+                        return {
+                          ...x,
+                          ...newItem,
+                        };
+                      }
+                      return x;
+                    });
+                  });
+                  setSelectedId(null);
+                }}
+              >
+                <FaSave className="inline-block" /> Save
+              </button>
+            </div>
           </motion.div>
         </motion.div>
       )}

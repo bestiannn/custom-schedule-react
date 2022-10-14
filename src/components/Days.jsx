@@ -23,14 +23,14 @@ const Days = ({
 
   return (
     <div className="font-extrabold text-ctp-lavender">
-      <h2 className="mt-5 mb-3 text-lg">{day}</h2>
+      <h2 className="mt-5 mb-3 text-lg underline decoration-2">{day}</h2>
       <button
         className="p-px rounded-full bg-ctp-surface1 hover:bg-ctp-surface0"
         onClick={handleAddItem}
       >
         <AiOutlinePlus className="mx-auto text-2xl text-ctp-lavender" />
       </button>
-      <div className="mt-5 font-bold text-ctp-text">
+      <div className="mt-5 text-md font-extrabold text-ctp-text">
         <Reorder.Group
           axis="y"
           values={itemsDay.map((x) => x.id)}
